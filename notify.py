@@ -1,27 +1,41 @@
-import indicate
-import os
 import pynotify
 import gtk, gtk.gdk
 
-def click(*args):
-    pass
+from indicator import Indicator
 
-def create_notification_server():
-    server = indicate.indicate_server_ref_default()
-    server.connect("server-display", click)
-    server.set_type("message.im")
-    server.set_desktop_file(os.path.abspath("app.desktop"))
-    server.show()
-    return server
+categories = {} #category name -> Category object
+indicator = Indicator()
+
+class Category(object):
+    def __init__(self, name, icon_path = None):
+        self.name = name
+        self.set_icon_path(icon_path)
+        categories[name] = self
+    def set_icon_path(self, path):
+        self.icon = None
+        if path:
+            self.icon = gtk.gdk.pixbuf_new_from_file(icon_path)
     
-def visual(summary, message, icon_path=None):
-    note = pynotify.Notification(summary, message)
-
-    if icon_path:
-        note.set_icon_from_pixbuf(gtk.gdk.pixbuf_new_from_file(icon_path))
-    note.show()
-
-
+class Message(object):
+    def __init__(self, summary, message, category_name=None):
+        self.summary = summary
+        self.message = message
+        if category_name == None:
+            category_name = "General"
+        try:
+            self.category = categories[category_name]
+        except KeyError:
+            self.category = Category(category_name)
+    
+    def notify(self):
+        note = pynotify.Notification(self.summary, self.message)
+        
+        if self.category.icon:
+            note.set_icon_from_pixbuf(self.category.icon)
+        note.show()
+        indicator.record_message(self)
+        
 if __name__ == '__main__':
-    server = create_notification_server()
+    msg = Message("Summary","This is the message","Stuff")
+    msg.notify()
     raw_input("Press Enter to quit")
