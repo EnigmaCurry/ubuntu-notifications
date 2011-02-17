@@ -1,0 +1,9 @@
+Here's where I got each of the icons:
+
+| Icon       | License     | URL                                             |
+|------------+-------------+-------------------------------------------------|
+| gmail1.png | CC-by-nc-nd | http://tempest.deviantart.com/gallery/#/d36uwz0 |
+| gmail2.png | CC-by-nc-nd | http://tempest.deviantart.com/gallery/#/d36uwz0 |
+| gmail3.png | CC-by-nc-nd | http://tempest.deviantart.com/gallery/#/d36uwz0 |
+| gmail4.png | CC-by-nc-nd | http://tempest.deviantart.com/gallery/#/d36uwz0 |
+
