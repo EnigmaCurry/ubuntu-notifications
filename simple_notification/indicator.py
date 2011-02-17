@@ -37,6 +37,7 @@ class Indicator(object):
     def record_message(self, message):
         #Increment the message count for the source
         source = self.get_source_for_category(message.category)
+        print source
         current_count = int(source.get_property("count"))
         source.set_property("count",str(current_count+1))
         source.show()
