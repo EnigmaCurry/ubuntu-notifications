@@ -1,13 +1,18 @@
 import sys
 import argparse
 import shlex
+import logging
 
 from . import __version__
 from . import dbus_service, dbus_client
+from . import server
 
 def do_serve(args):
-    dbus_service.run()
-
+    dbus_starter = dbus_service.Starter()
+    http_server = server.FlaskApp()
+    http_server.start()
+    dbus_starter.run()
+    
 def do_notify(args):
     notify = dbus_client.get_notify()
     notify(args.SUMMARY,args.MESSAGE,args.CATEGORY)

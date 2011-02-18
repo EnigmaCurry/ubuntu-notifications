@@ -15,11 +15,13 @@ class DBUSService(dbus.service.Object):
             self,bus_name,
             dbus_path)
 
+    @dbus.service.method(dbus_namespace)
     def notify(self, summary, message, category):
         Message(summary,message,category)
-    
-def run():
-    DBusGMainLoop(set_as_default=True)
-    service = DBUSService()
-    gtk.main()
 
+class Starter(object):
+    def __init__(self):
+        DBusGMainLoop(set_as_default=True)
+        service = DBUSService()
+    def run(self):
+        gtk.main()
