@@ -1,8 +1,24 @@
 import os
 import indicate
+import logging
+
+logging.basicConfig()
+logger = logging.getLogger("simple_notification.indicator")
+
+default_desktop_file = os.path.join(os.path.split(__file__)[0],"app.desktop")
+
+app_indicator = None
+def get_indicator():
+    global app_indicator
+    if app_indicator:
+        return app_indicator
+    app_indicator = Indicator()
+    return app_indicator
+
 
 class Indicator(object):
-    def __init__(self, desktop_file = os.path.abspath("app.desktop")):
+    def __init__(self, desktop_file = default_desktop_file):
+        logger.warn("Starting Ubuntu message indicator..")
         server = indicate.indicate_server_ref_default()
         server.connect("server-display", self.__server_click_event)
         server.set_type("message.im")
@@ -37,7 +53,6 @@ class Indicator(object):
     def record_message(self, message):
         #Increment the message count for the source
         source = self.get_source_for_category(message.category)
-        print source
         current_count = int(source.get_property("count"))
         source.set_property("count",str(current_count+1))
         source.show()

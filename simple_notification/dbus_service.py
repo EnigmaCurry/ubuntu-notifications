@@ -25,3 +25,9 @@ def run():
     service = DBUSService()
     gtk.main()
 
+class Starter(object):
+    def __init__(self):
+        DBusGMainLoop(set_as_default=True)
+        service = DBUSService()
+    def run(self):
+        gtk.main()

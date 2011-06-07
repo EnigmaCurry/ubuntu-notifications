@@ -1,10 +1,9 @@
 import pynotify
 import gtk, gtk.gdk
 
-from indicator import Indicator
+from indicator import get_indicator
 
 categories = {} #category name -> Category object
-app_indicator = Indicator()
 
 class Category(object):
     def __init__(self, name, icon_path=None):
@@ -36,7 +35,7 @@ class Message(object):
         if self.category.icon:
             note.set_icon_from_pixbuf(self.category.icon)
         note.show()
-        app_indicator.record_message(self)
+        get_indicator().record_message(self)
         
 if __name__ == '__main__':
     msg = Message("Summary","This is the message","Ryan")
