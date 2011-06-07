@@ -15,8 +15,10 @@ class DBUSService(dbus.service.Object):
             self,bus_name,
             dbus_path)
 
+    @dbus.service.method(dbus_interface=dbus_namespace)
     def notify(self, summary, message, category):
         Message(summary,message,category)
+        return 1
     
 def run():
     DBusGMainLoop(set_as_default=True)
